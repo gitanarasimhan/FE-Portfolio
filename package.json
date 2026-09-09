@@ -1,0 +1,15 @@
+{
+  "name": "fe-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": "https://gitanarasimhan.github.io/FE-Portfolio/",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "deploy-storybook": "npm run build-storybook && npx gh-pages -d storybook-static"
+  },
+  "devDependencies": {
+    "@storybook/react": "^7.0.0",
+    "gh-pages": "^4.0.0"
+  }
+}
