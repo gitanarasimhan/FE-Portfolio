@@ -4,6 +4,9 @@ import { DragDropArea } from './DragDropArea';
 const meta: Meta<typeof DragDropArea> = {
   title: 'Components/DragDropArea',
   component: DragDropArea,
+  parameters: {
+    layout: 'centered',
+  },
   args: {
     accept: 'image/*',
     onFiles: (files) => console.log('files:', files),

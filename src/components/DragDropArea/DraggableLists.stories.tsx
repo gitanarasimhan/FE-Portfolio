@@ -4,8 +4,11 @@ import { DraggableList } from './DraggableList';
 const meta: Meta<typeof DraggableList> = {
   title: 'Components/DraggableList',
   component: DraggableList,
+  parameters: {
+    layout: 'centered',
+  },
   args: {
-    items: ['One', 'Two', 'Three'],
+    items: ['Discovery', 'Planning', 'Execution', 'Review'],
     onReorder: (items) => console.log('reordered:', items),
   },
 };

@@ -14,21 +14,26 @@ type Props = {
 
 export const AdvancedChart: React.FC<Props> = ({ data, xKey, series, height = 300, className = '' }) => {
   return (
-    <div className={`u-card ${className}`} style={{ padding: 12 }}>
+    <div className={`u-card chart-card ${className}`.trim()}>
       <ResponsiveContainer width="100%" height={height}>
-        {/* We use a LineChart container for shared axes; render series depending on type */}
         <LineChart data={data} margin={{ top: 8, right: 24, left: 0, bottom: 8 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-          <XAxis dataKey={xKey} />
-          <YAxis />
-          <Tooltip />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e7edf5" />
+          <XAxis dataKey={xKey} stroke="#5d6b82" tickLine={false} axisLine={false} />
+          <YAxis stroke="#5d6b82" tickLine={false} axisLine={false} />
+          <Tooltip
+            contentStyle={{
+              borderRadius: 12,
+              border: '1px solid #d6deeb',
+              background: '#ffffff',
+              boxShadow: '0 12px 22px rgba(15,23,42,0.08)',
+            }}
+          />
           <Legend />
           {series.map((s, i) => {
             const color = s.color ?? palette[i % palette.length];
-            if (s.type === 'line') return <Line key={s.dataKey} type="monotone" dataKey={s.dataKey} stroke={color} name={s.name} strokeWidth={2} dot={false} />;
-            if (s.type === 'area') return <Area key={s.dataKey} dataKey={s.dataKey} stroke={color} fill={color} name={s.name} fillOpacity={0.15} />;
-            // render bar as a Bar inside a composed chart requires different container — but simple bars will render in LineChart as well
-            if (s.type === 'bar') return <Bar key={s.dataKey} dataKey={s.dataKey} fill={color} name={s.name} />;
+            if (s.type === 'line') return <Line key={s.dataKey} type="monotone" dataKey={s.dataKey} stroke={color} name={s.name} strokeWidth={2.5} dot={false} activeDot={{ r: 5 }} />;
+            if (s.type === 'area') return <Area key={s.dataKey} dataKey={s.dataKey} stroke={color} fill={color} name={s.name} fillOpacity={0.12} strokeWidth={2.5} />;
+            if (s.type === 'bar') return <Bar key={s.dataKey} dataKey={s.dataKey} fill={color} name={s.name} radius={[6, 6, 0, 0]} />;
             return null;
           })}
         </LineChart>

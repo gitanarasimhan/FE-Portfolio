@@ -3,19 +3,22 @@ import React from 'react';
 import { Dropdown } from './Dropdown';
 
 const options = [
-  { value: 'apple', label: 'Apple' },
-  { value: 'banana', label: 'Banana' },
-  { value: 'cherry', label: 'Cherry' },
-  { value: 'date', label: 'Date' },
+  { value: 'design', label: 'Design systems' },
+  { value: 'product', label: 'Product strategy' },
+  { value: 'engineering', label: 'Engineering' },
+  { value: 'operations', label: 'Operations' },
 ];
 
 const meta: Meta<typeof Dropdown> = {
   title: 'Components/Dropdown',
   component: Dropdown,
+  parameters: {
+    layout: 'centered',
+  },
   args: {
     options,
-    placeholder: 'Choose a fruit',
-    value: 'banana',
+    placeholder: 'Choose a focus area',
+    value: 'product',
     onChange: () => undefined,
   },
 };
@@ -43,7 +46,7 @@ export const Default: Story = {
 export const EmptySelection: Story = {
   args: {
     value: null,
-    placeholder: 'Select a fruit',
+    placeholder: 'Select a focus area',
   },
   render: (args) => {
     const [value, setValue] = React.useState<string | null>(args.value ?? null);

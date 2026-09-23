@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 
 type DragDropAreaProps = {
   onFiles: (files: File[]) => void;
@@ -8,6 +8,7 @@ type DragDropAreaProps = {
 
 export const DragDropArea: React.FC<DragDropAreaProps> = ({ onFiles, accept = '*', className = '' }) => {
   const [active, setActive] = React.useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -24,12 +25,36 @@ export const DragDropArea: React.FC<DragDropAreaProps> = ({ onFiles, accept = '*
       onDragOver={(e) => { e.preventDefault(); setActive(true); }}
       onDragLeave={() => setActive(false)}
       onDrop={onDrop}
-      className={`border-dashed border-2 p-6 rounded-md text-center ${className}`}
-      style={{ borderColor: 'var(--color-border)', background: active ? '#f1f5f9' : 'transparent' }}
+      className={`dropzone ${active ? 'is-active' : ''} ${className}`.trim()}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          inputRef.current?.click();
+        }
+      }}
+      onClick={() => inputRef.current?.click()}
     >
-      <p className="mb-2">Drag & drop files here</p>
-      <p className="text-sm text-[var(--color-muted)]">Accepted: {accept}</p>
-      <input type="file" className="hidden" onChange={(e) => { if (e.target.files) onFiles(Array.from(e.target.files)); }} />
+      <input
+        ref={inputRef}
+        type="file"
+        className="hidden"
+        onChange={(e) => {
+          if (e.target.files) onFiles(Array.from(e.target.files));
+          e.currentTarget.value = '';
+        }}
+      />
+
+      <div className="dropzone__content">
+        <div className="dropzone__icon" aria-hidden="true">↑</div>
+        <p className="dropzone__title">Drag & drop files here</p>
+        <p className="dropzone__hint">or</p>
+        <button type="button" className="dropzone__button" onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}>
+          Browse files
+        </button>
+        <small className="dropzone__hint">Accepted: {accept}</small>
+      </div>
     </div>
   );
 };
