@@ -9,9 +9,15 @@
     "deploy-storybook": "npm run build-storybook && npx gh-pages -d storybook-static"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
+    "@babel/preset-typescript": "^7.29.7",
     "@storybook/react": "^7.0.0",
     "@storybook/react-webpack5": "^7.6.24",
+    "babel-loader": "^10.1.1",
     "gh-pages": "^4.0.0",
-    "storybook": "^7.6.24"
+    "storybook": "^7.6.24",
+    "typescript": "^7.0.2"
   }
 }
